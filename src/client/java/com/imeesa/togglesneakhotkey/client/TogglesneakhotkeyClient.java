@@ -8,11 +8,15 @@ import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 import org.lwjgl.glfw.GLFW;
 
 public class TogglesneakhotkeyClient implements ClientModInitializer {
     private static KeyBinding toggleSneakModeKeyBinding;
     private static KeyBinding toggleSprintModeKeyBinding;
+
+    private static Identifier category_identifier = Identifier.of("category.togglesneakhotkey.togglehotkeys");
+    private static KeyBinding.Category category = KeyBinding.Category.create(category_identifier);
 
     @Override
     public void onInitializeClient() {
@@ -20,14 +24,14 @@ public class TogglesneakhotkeyClient implements ClientModInitializer {
                 "key.togglesneakhotkey.togglesneakmode", // The translation key of the keybinding's name
                 InputUtil.Type.KEYSYM, // The type of the keybinding, KEYSYM for keyboard, MOUSE for mouse.
                 GLFW.GLFW_KEY_F9, // The keycode of the key
-                "category.togglesneakhotkey.togglehotkeys" // The translation key of the keybinding's category.
+                category  // The keybinding's category.
          ));
 
         toggleSprintModeKeyBinding = KeyBindingHelper.registerKeyBinding(new KeyBinding(
                 "key.togglesneakhotkey.togglesprintmode", // The translation key of the keybinding's name
                 InputUtil.Type.KEYSYM, // The type of the keybinding, KEYSYM for keyboard, MOUSE for mouse.
                 GLFW.GLFW_KEY_F10, // The keycode of the key
-                "category.togglesneakhotkey.togglehotkeys" // The translation key of the keybinding's category.
+                category // The keybinding's category.
         ));
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
