@@ -15,7 +15,7 @@ public class TogglesneakhotkeyClient implements ClientModInitializer {
     private static KeyBinding toggleSneakModeKeyBinding;
     private static KeyBinding toggleSprintModeKeyBinding;
 
-    private static Identifier category_identifier = Identifier.of("category.togglesneakhotkey.togglehotkeys");
+    private static Identifier category_identifier = Identifier.of("togglesneakhotkey", "togglehotkeys");
     private static KeyBinding.Category category = KeyBinding.Category.create(category_identifier);
 
     @Override
