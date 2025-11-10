@@ -9,5 +9,5 @@
   "message.togglesneakhotkey.togglesprintenabled": "Toggle Sprint enabled!",
     "message.togglesneakhotkey.togglesprintdisabled": "Toggle Sprint disabled!",
 
-  "key.category.togglesneakhotkey.togglehotkeys": "Toggle Hotkeys"
+  "category.togglesneakhotkey.togglehotkeys": "Toggle Hotkeys"
 }
