@@ -1,4 +1,4 @@
-{
+  // TODO(Ravel): Does not have a concrete package name{
   "required": true,
   "minVersion": "0.8",
   "package": "com.imeesa.togglesneakhotkey.mixin",
