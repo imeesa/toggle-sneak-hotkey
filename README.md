@@ -1,4 +1,4 @@
-![Modrinth](https://img.shields.io/modrinth/v/toggle-sneak-hotkey)
+![Modrinth](https://img.shields.io/modrinth/v/toggle-sneak-hotkey?a)
 
 Download from [Modrinth](https://modrinth.com/project/toggle-sneak-hotkey)
 
