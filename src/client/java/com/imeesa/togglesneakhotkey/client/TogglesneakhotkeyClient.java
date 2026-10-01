@@ -1,51 +1,52 @@
 package com.imeesa.togglesneakhotkey.client;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
-import net.minecraft.client.option.KeyBinding;
-import net.minecraft.client.util.InputUtil;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
-import org.lwjgl.glfw.GLFW;
+import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
+import net.minecraft.client.KeyMapping;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 
 public class TogglesneakhotkeyClient implements ClientModInitializer {
-    private static KeyBinding toggleSneakModeKeyBinding;
-    private static KeyBinding toggleSprintModeKeyBinding;
+    private static KeyMapping toggleSneakModeKeyMapping;
+    private static KeyMapping toggleSprintModeKeyMapping;
 
-    private static Identifier category_identifier = Identifier.of("togglesneakhotkey", "togglehotkeys");
-    private static KeyBinding.Category category = KeyBinding.Category.create(category_identifier);
+    private static Identifier category_identifier = Identifier.fromNamespaceAndPath("togglesneakhotkey", "togglehotkeys");
+    private static KeyMapping.Category category = KeyMapping.Category.register(category_identifier);
 
     @Override
     public void onInitializeClient() {
-        toggleSneakModeKeyBinding = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-                "key.togglesneakhotkey.togglesneakmode", // The translation key of the keybinding's name
-                InputUtil.Type.KEYSYM, // The type of the keybinding, KEYSYM for keyboard, MOUSE for mouse.
-                GLFW.GLFW_KEY_F9, // The keycode of the key
-                category  // The keybinding's category.
-         ));
+        toggleSneakModeKeyMapping = KeyMappingHelper.registerKeyMapping(new KeyMapping(
+                "key.togglesneakhotkey.togglesneakmode",
+                InputConstants.Type.values()[0],
+                InputConstants.KEY_F9,
+                category
+        ));
 
-        toggleSprintModeKeyBinding = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-                "key.togglesneakhotkey.togglesprintmode", // The translation key of the keybinding's name
-                InputUtil.Type.KEYSYM, // The type of the keybinding, KEYSYM for keyboard, MOUSE for mouse.
-                GLFW.GLFW_KEY_F10, // The keycode of the key
-                category // The keybinding's category.
+        toggleSprintModeKeyMapping = KeyMappingHelper.registerKeyMapping(new KeyMapping(
+                "key.togglesneakhotkey.togglesprintmode",
+                InputConstants.Type.values()[0],
+                InputConstants.KEY_F10,
+                category
         ));
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            while (toggleSneakModeKeyBinding.wasPressed()) {
+            while (toggleSneakModeKeyMapping.consumeClick()) {
                 if (client.player != null) {
-                    boolean isSneakToggle = client.options.getSneakToggled().getValue();
-                    if (isSneakToggle) client.player.setSneaking(false); // Update the player's sneaking state
-                    client.options.getSneakToggled().setValue(!isSneakToggle);
-                    client.player.sendMessage(Text.translatable(!isSneakToggle ? "message.togglesneakhotkey.togglesneakenabled" : "message.togglesneakhotkey.togglesneakdisabled"), true);
+                    boolean isSneakToggle = client.options.toggleCrouch().get();
+
+                    // if (isSneakToggle) client.crouch = false; // never worked anyways
+
+                    client.options.toggleCrouch().set(!isSneakToggle);
+                    client.player.sendSystemMessage(Component.translatable(!isSneakToggle ? "message.togglesneakhotkey.togglesneakenabled" : "message.togglesneakhotkey.togglesneakdisabled"));
                 }
             }
-            while (toggleSprintModeKeyBinding.wasPressed()) {
+            while (toggleSprintModeKeyMapping.consumeClick()) {
                 if (client.player != null) {
-                    boolean isSprintToggle = client.options.getSprintToggled().getValue();
-                    client.options.getSprintToggled().setValue(!isSprintToggle);
-                    client.player.sendMessage(Text.translatable(!isSprintToggle ? "message.togglesneakhotkey.togglesprintenabled" : "message.togglesneakhotkey.togglesprintdisabled"), true);
+                    boolean isSprintToggle = client.options.toggleSprint().get();
+                    client.options.toggleSprint().set(!isSprintToggle);
+                    client.player.sendSystemMessage(Component.translatable(!isSprintToggle ? "message.togglesneakhotkey.togglesprintenabled" : "message.togglesneakhotkey.togglesprintdisabled"));
                 }
             }
         });

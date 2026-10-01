@@ -24,16 +24,10 @@
       "com.imeesa.togglesneakhotkey.Togglesneakhotkey"
     ]
   },
-  "mixins": [
-    "togglesneakhotkey.mixins.json",
-    {
-      "config": "togglesneakhotkey.client.mixins.json",
-      "environment": "client"
-    }
-  ],
+  "mixins": [],
   "depends": {
     "fabricloader": ">=${loader_version}",
-    "fabric": "*",
+    "fabric-api": "*",
     "minecraft": ">=${minecraft_version}"
   }
 }
