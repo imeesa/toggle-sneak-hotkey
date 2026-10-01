@@ -39,6 +39,7 @@ public class TogglesneakhotkeyClient implements ClientModInitializer {
                     // if (isSneakToggle) client.crouch = false; // never worked anyways
 
                     client.options.toggleCrouch().set(!isSneakToggle);
+                    client.options.save();
                     client.player.sendSystemMessage(Component.translatable(!isSneakToggle ? "message.togglesneakhotkey.togglesneakenabled" : "message.togglesneakhotkey.togglesneakdisabled"));
                 }
             }
@@ -46,6 +47,7 @@ public class TogglesneakhotkeyClient implements ClientModInitializer {
                 if (client.player != null) {
                     boolean isSprintToggle = client.options.toggleSprint().get();
                     client.options.toggleSprint().set(!isSprintToggle);
+                    client.options.save();
                     client.player.sendSystemMessage(Component.translatable(!isSprintToggle ? "message.togglesneakhotkey.togglesprintenabled" : "message.togglesneakhotkey.togglesprintdisabled"));
                 }
             }
